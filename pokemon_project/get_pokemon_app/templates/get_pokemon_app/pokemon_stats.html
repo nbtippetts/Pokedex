@@ -1,0 +1,67 @@
+{% extends "get_pokemon_app/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<form class="search-bar"method="POST" action="" style="display: flex; justify-content: center;">
+	{% csrf_token %}
+	<input id="search_box" type="text" name="search_box" placeholder="Search Id of Pokemon Name......">
+	<button id="search_submit" type="submit">Submit</button>
+</form>
+
+
+<div class="flex-container"
+	style="display: flex; flex-direction: row; flex-flow: row wrap; justify-content: space-around;">
+	{% for p in pokemon %}
+	<div class="card" style="display: flex; flex-basis: 30%; width: 15rem; margin-bottom: 10px; margin-top: 10px;">
+		<img class="card-img-top" src="{{ p.sprites }}">
+		<div class="card-body">
+			<small>#{{ p.id }}</small>
+			<h2 class="card-title">{{ p.species }}</h2>
+			<!-- <div class="d-flex flex-nowrap"> -->
+			<!-- </div> -->
+		</div>
+	</div>
+	<div class="card" style="display: flex; width: 15rem; margin-bottom: 10px; margin-top: 10px;">
+		<div class="card-body">
+			<div class="card-text">
+				<div class="p-2 justify-content-around">Height: {{ p.height }}</div>
+				<div class="p-2 justify-content-around">Weight: {{ p.weight }}</div>
+			</div>
+			<!-- <div class="d-flex flex-nowrap"> -->
+			<!-- </div> -->
+		</div>
+	</div>
+	<div class="card" style="display: flex; width: 15rem; margin-bottom: 10px; margin-top: 10px;">
+		<div class="card-body">
+			<div class="card-text">
+				{% if not p.types1 %}
+				<div class="p-2 justify-content-around">Type: {{ p.types0 }}</div>
+				{% else %}
+				<div class="p-2 justify-content-around">Type: {{ p.types0 }} {{ p.types1 }}</div>
+				{% endif %}
+				<div class="p-2 justify-content-around">Weaknesses:
+					{% for sub_p in p.weakness %}
+					{{ sub_p }}
+					{% endfor %}
+				</div>
+			</div>
+			<!-- <div class="d-flex flex-nowrap"> -->
+			<!-- </div> -->
+		</div>
+	</div>
+	<div class="card" style="display: flex; width: 15rem; margin-bottom: 10px; margin-top: 10px;">
+		<div class="card-body">
+			<div class="card-text">
+				<div class="p-2 justify-content-around">HP: {{ p.hp }}</div>
+				<div class="p-2 justify-content-around">Speed: {{ p.speed }}</div>
+				<div class="p-2 justify-content-around">Attack: {{ p.attack }}</div>
+				<div class="p-2 justify-content-around">Defence: {{ p.defense }}</div>
+				<div class="p-2 justify-content-around">Special Attack: {{ p.special_attack }}</div>
+				<div class="p-2 justify-content-around">Special Defence: {{ p.special_defense }}</div>
+			</div>
+			<!-- <div class="d-flex flex-nowrap"> -->
+			<!-- </div> -->
+		</div>
+	</div>
+	{% endfor%}
+</div>
+{% endblock content %}

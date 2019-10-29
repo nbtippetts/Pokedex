@@ -1,0 +1,33 @@
+{% extends "get_pokemon_app/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<form method="POST" action=""style="display: flex; justify-content: center;">
+		{% csrf_token %}
+		<input id="search_box" type="text" name="search_box" placeholder="Search Id of Pokemon Name...">
+		<button id="search_submit" type="submit">Submit</button>
+	</form>
+
+
+<div class="flex-container" style="display: flex; flex-direction: row; flex-flow: row wrap; justify-content: space-around;">
+	{% for p in pokemon %}
+		<div class="card" style="display: flex; flex-basis: 30%; width: 15rem; margin-bottom: 10px; margin-top: 10px;">
+			<img class="card-img-top" src="{{ p.sprites }}">
+			<div class="card-body">
+				<small>#{{ p.id }}</small>
+				<h2 class="card-title">{{ p.species }}</h2>
+				<div class="card-text">
+					{% if not p.types1 %}
+						<div class="p-2 justify-content-around">{{ p.types0 }}</div>
+					{% else %}
+						<div class="p-2 justify-content-around">{{ p.types0 }}</div>
+						<div class="p-2 justify-content-around">{{ p.types1 }}</div>
+					{% endif %}
+				</div>
+				<a class="btn btn-outline-info" href="{% url 'get_pokemon_app-pokemon_stats' p.id %}">See Stats</a>
+				<!-- <div class="d-flex flex-nowrap"> -->
+				<!-- </div> -->
+			</div>
+		</div>
+	{% endfor%}
+</div>
+{% endblock content %}
